@@ -132,12 +132,16 @@ p5.prototype.loadD3CSV = function (path) {
  * Asynchronous function for loading CSV data.
  * @function loadCSVAsync
  * @param {string} path - The path to the CSV file.
+ * @param {string} [delimiter=','] - The delimiter used in the CSV file.
  * @returns {Promise<Array>} A promise that resolves with the CSV data.
  */
-p5.prototype.loadCSVAsync = function (path) {
-  return d3.csv(path, d3.autoType);
+p5.prototype.loadCSVAsync = function (path, delimiter = ",") {
+  if (delimiter === ",") {
+    return d3.csv(path, d3.autoType);
+  } else {
+    return d3.dsv(delimiter, path, d3.autoType);
+  }
 };
-
 // Register the custom preload function for JSON
 p5.prototype.registerPromisePreload({
   target: p5.prototype,
